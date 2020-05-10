@@ -1,4 +1,4 @@
-package com.administration;
+package com.bankaccountApp;
 
 public interface IRate {
     //return baseRate

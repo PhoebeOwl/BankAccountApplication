@@ -1,4 +1,4 @@
-package com.administration;
+package com.bankaccountApp;
 
 public class SavingAccount extends Account implements IRate {
     private int safetyDepositBoxNumber;

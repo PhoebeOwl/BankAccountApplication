@@ -1,4 +1,4 @@
-package com.administration;
+package com.bankaccountApp;
 
 public class CheckingAccount extends Account implements IRate{
     private long debitCardNumber;
