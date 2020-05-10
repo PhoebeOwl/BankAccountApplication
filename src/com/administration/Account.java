@@ -3,22 +3,23 @@ package com.administration;
 import java.text.DecimalFormat;
 
 public abstract class Account {
-    static int uniqueNumber=100000;
-    String name;
-    double baseRate;
-    String socialSecurityNumber;
-    int accountType;
-    String accountNumber;
-    int initialDeposit;
-    DecimalFormat df2 = new DecimalFormat("#.##");
+    private static int uniqueNumber=100000;
+    private String name;
+    private String socialSecurityNumber;
+    private int initialDeposit;
+    protected String accountNumber;
+    protected double interestRate;
+    protected double balance;
+    protected DecimalFormat df2 = new DecimalFormat("#.##");
+
     public Account(String name, String socialSecurityNumber,int initialDeposit){
         this.name=name;
         this.socialSecurityNumber=socialSecurityNumber;
         this.initialDeposit= initialDeposit;
-        this.baseRate=0.75;
-        this.accountType=accountType;
+        this.balance=initialDeposit;
+        interestRate=setRate();
         this.accountNumber= generateAccountNumber();
-        this.uniqueNumber ++;
+        uniqueNumber ++;
     }
     public String generateAccountNumber(){
         //11-Digit Account Number (generated with the following process:
@@ -30,7 +31,7 @@ public abstract class Account {
         //  last two digits of SSN,
 //        int lastTwoSSN = socialSecurityNumber%100;
 //        sb.append(lastTwoSSN);
-        sb.append(socialSecurityNumber.substring(socialSecurityNumber.length()-2,socialSecurityNumber.length()));
+        sb.append(socialSecurityNumber.substring(socialSecurityNumber.length()-2));
 
         //  unique  5-digit number,
         sb.append(uniqueNumber);
@@ -41,13 +42,33 @@ public abstract class Account {
         return sb.toString();
 
     }
-    public abstract void  deposit();
-    public abstract void withdraw();
-    public abstract void transfer();
+    // interest rate of subclasses will call the baseRate from the interface IRate
+    public abstract double setRate();
+
+    public void  deposit(double amount){
+        balance =balance+amount;
+        printBalance();
+    }
+    public void withdraw(double amount){
+        balance=balance-amount;
+        printBalance();
+    }
+    public void printBalance(){
+        System.out.println("The balance of your account: "+
+               df2.format(balance) );
+    }
+    public void compound(){
+        balance=balance*(1+ interestRate/100);
+    }
+    public void transfer(Account toAccount, double amount){
+        this.withdraw(amount);
+        toAccount.deposit(amount);
+        System.out.println("you have transfered "+amount+" to the account "+toAccount.accountNumber+"" +
+                " successfully!");
+    }
     public void showinfo(){
-        System.out.println("Name:"+name+"\n"+
-               "social security number:"+"\n"+
-                "initial deposit"+initialDeposit);
-    };
+        System.out.println("Name:"+name);
+        //printBalance();
+    }
 
 }

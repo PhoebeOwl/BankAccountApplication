@@ -1,18 +1,16 @@
 package com.administration;
 
-import java.text.DecimalFormat;
-
 public class CheckingAccount extends Account implements IRate{
     private long debitCardNumber;
     private int debitCardCode;
-    private double checkingRate;
+
 
 
     public CheckingAccount(String name,String socialSecurityNumber,int initialDeposit){
         super(name,socialSecurityNumber,initialDeposit);
         accountNumber="2"+accountNumber;
         setDebitCardBox();
-        this.checkingRate=setRate();
+
 
     }
     private void setDebitCardBox(){
@@ -23,30 +21,19 @@ public class CheckingAccount extends Account implements IRate{
 
     @Override
     public double setRate() {
-        return baseRate*0.15;
+        return getBaseRate() *0.15;
     }
 
-    @Override
-    public void deposit() {
-
-    }
-
-    @Override
-    public void withdraw() {
-
-    }
-
-    @Override
-    public void transfer() {
-
-    }
 
     @Override
     public void showinfo() {
         super.showinfo();
         System.out.println("account type: checking Account"+"\n"+
-                "account number"+accountNumber+
-                "\ninterest rate: "+df2.format(checkingRate));
+                "account number: "+accountNumber+
+                "\ninterest rate: "+df2.format(interestRate)+
+                "\nYour checking account features: \n  debit card Number:"+debitCardNumber +
+                "\n  debit card code:"+debitCardCode +
+                "\n***********************");
     }
 //    @Override
 //    public String toString() {

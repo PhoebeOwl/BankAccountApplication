@@ -2,5 +2,8 @@ package com.administration;
 
 public interface IRate {
     //return baseRate
-    public double setRate();
+
+    default double getBaseRate(){
+        return 2.5;
+    }
 }
